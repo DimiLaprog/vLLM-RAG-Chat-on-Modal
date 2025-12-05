@@ -9,6 +9,7 @@ End-to-end Retrieval Augmented Generation (RAG) stack:
 - **Frontend:** **Streamlit** chat UI talking to an OpenAI-compatible endpoint
 
 ---
+[![Watch the demo](./vLLM-RAG-MODAL-THUMBNAIL.png)](https://www.loom.com/share/270222a0b6fd4a199e5bf46b1fa71b01)
 
 ## High-level architecture
 ```mermaid
@@ -43,3 +44,4 @@ graph TD
 
 This project was initially inspired by the Udemy course "Production LLM Deployment: vLLM,FastAPI,Modal and AI Chatbot" by Petar Petkanov (Not affiliated or sponsored in any way).
 I used it to learn the basics of Modal apps and vLLM, then extended it.
+
