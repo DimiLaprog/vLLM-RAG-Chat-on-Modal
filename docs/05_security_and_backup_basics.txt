@@ -1,0 +1,52 @@
+TITLE: SMB SECURITY AND BACKUP – MINIMUM VIABLE BASELINE
+
+Network security
+- Disable ISP router Wi-Fi if using your own access points.
+- Change admin passwords on all network devices.
+- Ensure remote management from WAN is disabled or restricted to VPN.
+- Use separate VLAN or SSID for guests, with no access to internal resources.
+
+Endpoint security
+- All PCs and laptops:
+  - Operating system fully updated.
+  - Commercial endpoint security or endpoint detection and response if budget allows.
+- Enforce:
+  - Screen lock after short idle.
+  - Full-disk encryption on laptops.
+
+Identity and access
+- Prefer Microsoft 365 or Google Workspace over do-it-yourself mail servers.
+- Central identity preferred:
+  - Azure AD or Entra ID, or local Active Directory synced to cloud.
+- Shared folders:
+  - Create groups per department (for example Finance, HR, Sales).
+  - Give permissions to groups, not to individual users.
+
+Backup strategy – three-two-one rule
+- Three copies of data (production plus two backups).
+- Two different media (for example NAS plus cloud backup).
+- One copy off-site (cloud or another location).
+- Use:
+  - NAS snapshots for quick rollbacks.
+  - Cloud backup or at least encrypted off-site backup.
+
+Backup heuristics
+- Schedule daily incremental backup and weekly full backup.
+- Keep at least 30 days of retention for SMBs.
+- Test restore at least twice per year.
+- Critical sets:
+  - Accounting or ERP database.
+  - File server shares.
+  - Any custom line-of-business application data.
+
+Ransomware resilience
+- Immutable backups if possible.
+- Least privilege on shared folders (no “everyone full access”).
+- Train users about phishing; it is boring but necessary.
+
+Incident response basics
+- If ransomware or major incident is suspected:
+  - Disconnect infected machines from the network.
+  - Do not immediately wipe things; preserve evidence if needed.
+  - Check last known-good backup date.
+  - Plan restore sequence: domain controller, databases, file shares, applications.

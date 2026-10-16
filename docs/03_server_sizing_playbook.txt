@@ -1,0 +1,61 @@
+TITLE: SMB SERVER SIZING PLAYBOOK (ROUGH HEURISTICS)
+
+Goal: give fast ballpark designs, not replace detailed capacity planning.
+
+User profile buckets
+- Small: 5–15 users.
+- Medium: 15–40 users.
+- Large SMB: 40–100 users (beyond this, consider more formal sizing or multiple servers).
+
+Baseline workloads
+- AD, DNS, DHCP.
+- File server or NAS.
+- Light line-of-business app (accounting, small ERP, CRM).
+- Occasional remote access (VPN or RDP).
+- Virtualization (2–5 light virtual machines).
+
+CPU sizing rules
+- For most SMBs, core count matters more than exotic CPUs.
+- Small:
+  - 4–8 vCPUs total, often 1–2 sockets or a single decent CPU.
+- Medium:
+  - 8–16 vCPUs, enough for 3–6 light virtual machines.
+- Large SMB:
+  - 16–24 vCPUs, maybe dual-socket entry server.
+
+RAM sizing rules
+- Rule of thumb: start at 32 GB and add in steps of 16 GB.
+- Small: 32 GB is fine if workloads are light.
+- Medium: 64 GB is the sweet spot.
+- Large SMB: 64–128 GB if they really run multiple heavy apps.
+
+Storage and RAID
+- Always separate:
+  - OS or boot.
+  - Data (file shares, database data).
+  - Backups (other disk, NAS, or external).
+- RAID:
+  - RAID 1 (mirroring) for simplicity and fast recovery on small setups.
+  - RAID 5 or 6 when capacity is more important and a bit more budget is available.
+- Use SSDs for:
+  - Databases or virtual machine boot drives.
+  - Small but performance-sensitive workloads.
+- Use HDDs for:
+  - Bulk file storage, archives, CCTV.
+
+Virtualization
+- Hypervisor choice should be simple and supportable for the partner.
+- Heuristic:
+  - Three or fewer VMs: can get away with one physical server plus good backups.
+  - More than three or four important VMs: push for a second host plus shared storage or at least backup that allows quick restore elsewhere.
+
+Availability expectations
+- Many SMBs will say they want no downtime, but they do not want to pay for it.
+- Offer tiers:
+  - Bronze: single server, good backup, four to eight hours recovery time objective.
+  - Silver: two servers, simple failover, one to four hours recovery time objective.
+  - Gold: cluster and/or high-availability storage, less than one hour recovery time objective.
+
+Always discuss:
+- Whether backups are tested, not just configured.
+- Where they want to be in case of fire or theft: “back in business in one day” or “in one hour”.

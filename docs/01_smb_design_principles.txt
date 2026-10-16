@@ -1,0 +1,44 @@
+TITLE: SMB IT OFFICE DESIGN – CORE PRINCIPLES (INTERNAL PLAYBOOK)
+
+1. Start from business requirements, not from hardware
+- Ask what the company actually does (accounting firm, small e-shop, marketing agency, etc.).
+- Map workloads: office apps, file sharing, accounting/ERP, VoIP, remote access, CCTV, etc.
+- Define priorities: availability vs cost vs simplicity. Most SMBs want “simple and stable” more than “fancy and over-engineered”.
+
+2. Standard reference architecture for 10–50 users
+- Fiber/cable modem in bridge mode → firewall/router → L2/L3 switch → access points + wired endpoints.
+- Central NAS or small server for shared files and local services.
+- Cloud services (M365/Google Workspace) for mail and collaboration by default.
+- Separate guest Wi-Fi and staff Wi-Fi, no shared passwords.
+
+3. Avoid single points of failure where it’s cheap to do so
+- Use at least a small UPS on router/firewall/switch/NAS.
+- For critical shared storage, use RAID 1 or RAID 5 (depending on budget and capacity).
+- Always enable automatic cloud backup of critical data (even if local NAS exists).
+
+4. Security baseline for any SMB office
+- No default passwords. Change admin passwords on router, firewall, NAS, APs.
+- Disable remote management from WAN on cheap ISP routers; use VPN instead.
+- Use a commercial endpoint security client on every PC.
+- Minimum logical segmentation:
+  - VLAN 10 – staff LAN
+  - VLAN 20 – guest Wi-Fi internet-only
+  - VLAN 30 – management (network equipment, servers, NAS)
+- Enforce least privilege on shared folders (e.g. /Finance, /HR not visible to everyone).
+
+5. Standard monitoring and documentation
+- Keep a simple network diagram (even PowerPoint or draw.io) with:
+  - IP plan, VLANs, device names, management IPs, admin credentials location.
+- Use basic monitoring:
+  - Router/firewall CPU, WAN health.
+  - NAS or server disk health (S.M.A.R.T.).
+- Document:
+  - Internet provider details.
+  - Static IP info.
+  - Domain / DNS provider credentials.
+
+6. Rule of thumb design goals
+- Target: users should never have to think about Wi-Fi or printers.
+- Latency more important than “theoretical maximum Mbps”.
+- Any solution requiring CLI for daily use is too complex for most SMBs.
+- Design for easiest future troubleshooting: clear naming, labels, and predictable IP ranges.

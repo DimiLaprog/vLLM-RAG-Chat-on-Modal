@@ -1,0 +1,52 @@
+TITLE: UPS AND POWER – SIMPLE RULES FOR SMB OFFICES
+
+Goal: give quick guidance, not full electrical engineering design.
+
+Step 1: Identify critical loads
+- Absolutely critical:
+  - Router or firewall.
+  - Core switch.
+  - Server or NAS.
+- Usually optional:
+  - Access points (can be powered by PoE from switch).
+  - Desktop PCs (often not protected except for special roles, for example front desk).
+
+Step 2: Estimate power draw
+- Rule of thumb (rough, always check actual labels):
+  - Router or firewall: 20–40 watts.
+  - Small switch: 30–80 watts.
+  - Access points: 10–15 watts each if powered over Ethernet.
+  - Entry server: 150–300 watts under typical load.
+  - NAS: 40–100 watts.
+
+Example: core gear
+- Firewall (30 watts) plus L2 or L3 switch (60 watts) plus NAS (70 watts) is approximately 160 watts.
+
+Step 3: Translate watts to volt-amps
+- UPS capacity is often given in volt-amps.
+- Use simple factor 0.6 power factor:
+  - Apparent power in volt-amps is approximately watts divided by 0.6.
+  - 160 watts divided by 0.6 is about 270 volt-amps; choose at least a 700 to 1000 volt-amp UPS for headroom.
+
+Step 4: Runtime expectations
+- Cheap small UPS (700 to 1000 volt-amps) with 160-watt load:
+  - Typical runtime is 10–20 minutes.
+- Goal for SMB:
+  - Enough runtime to ride through short outages and allow graceful shutdown during long ones.
+
+Design heuristics
+- Use a dedicated UPS for core network and server or NAS.
+- If budget allows, use a second UPS for second server or critical workstations such as the front office.
+- Make sure shutdown software is configured:
+  - NAS or server should auto-shutdown at a safe battery threshold.
+- Label which outlets on the UPS are battery-backed and which are surge-only.
+
+Common mistakes
+- Plugging in laser printers to a UPS (large spikes that can overload or kill cheaper UPS devices).
+- Overloading UPS with non-critical devices (fans, heaters, and so on).
+- Never replacing batteries; they degrade in roughly three to five years.
+
+Talking points with client
+- How many minutes of power do you actually need?
+- What happens if the server shuts down uncleanly (risk of data corruption)?
+- Is it acceptable that only the core network and server are protected?

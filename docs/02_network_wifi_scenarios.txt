@@ -1,0 +1,59 @@
+TITLE: SMB NETWORK & WI-FI – TYPICAL SCENARIOS
+
+Scenario A: 10-person office, single room, light workloads
+- Business: marketing agency, mostly laptops, cloud tools (M365/Drive).
+- Requirements:
+  - Stable Wi-Fi, a few wired desks, ability to host client Wi-Fi.
+- Recommended design:
+  - ISP modem in bridge → SMB router/firewall.
+  - One PoE switch (8–16 ports).
+  - 1–2 ceiling access points (depending on room shape).
+  - 2 SSIDs:
+    - Staff: WPA2-Enterprise or at least WPA2 with unique PSK per employee (if possible).
+    - Guest: separate VLAN, internet-only, rate-limited.
+  - Optional: small NAS for shared files/Time Machine backups.
+- Key notes:
+  - Focus on coverage and reliability, not “Wi-Fi 7 buzzwords”.
+  - Reuse cheap unmanaged switches only at edge, not in core.
+
+Scenario B: 30-person office, two floors
+- Requirements:
+  - Mixed laptops and desktops.
+  - VoIP phones.
+  - CCTV system storing video locally.
+- Recommended design:
+  - Router/firewall with support for VLANs and basic UTM.
+  - Central L2/L3 switch in server corner.
+  - Per-floor PoE switches feeding access points and IP phones.
+  - VLAN layout:
+    - VLAN 10: staff PCs and laptops.
+    - VLAN 20: VoIP phones.
+    - VLAN 30: CCTV.
+    - VLAN 40: guest Wi-Fi internet-only.
+  - Separate SSIDs for staff and guest; staff SSID on VLAN 10, guest on VLAN 40.
+- QoS rules:
+  - Prioritize VoIP VLAN over everything else.
+  - Limit CCTV traffic to avoid saturating uplinks.
+
+Scenario C: Small warehouse plus front office
+- Requirements:
+  - Handheld barcode scanners on Wi-Fi.
+  - A couple of PCs in the front office.
+  - Communication with simple ERP or inventory system (maybe cloud).
+- Recommended design:
+  - Strong focus on Wi-Fi coverage inside warehouse shelves.
+  - 2–4 industrial or semi-industrial access points mounted high, with site survey if possible.
+  - Separate SSID for scanners to ensure stable connectivity.
+- Key notes:
+  - Latency and roaming performance are more important than raw throughput.
+  - Avoid access points mounted behind metal racks or close to heavy machinery.
+
+Troubleshooting heuristics
+- If Wi-Fi is “slow”:
+  - Check whether WAN is actually slow, or just internal Wi-Fi.
+  - Count concurrent clients per access point; more than 25–30 clients per AP on low-end gear will struggle.
+  - Check for cheap repeaters; replace them with proper APs.
+- If “internet drops randomly”:
+  - Check ISP modem logs.
+  - Look for power issues (no UPS, frequent outages).
+  - Check that DHCP ranges are not overlapping and not exhausted.

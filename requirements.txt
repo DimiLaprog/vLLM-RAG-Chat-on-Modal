@@ -1,0 +1,5 @@
+ipykernel
+modal
+requests
+openai
+sentence_transformers

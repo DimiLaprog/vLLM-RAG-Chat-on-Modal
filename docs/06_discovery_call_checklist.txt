@@ -1,0 +1,64 @@
+TITLE: SMB DISCOVERY CALL CHECKLIST (INTERNAL USE ONLY)
+
+Goal: collect enough information in one call to design a decent small office solution.
+
+1. Company profile
+- What does your company do?
+- How many employees total, and how many in the office versus remote?
+- Any planned growth in the next two to three years?
+
+2. Current pain points
+- What annoys people most about your current IT setup?
+  - Slow Wi-Fi?
+  - Files disappearing?
+  - Frequent downtime?
+- Any recent incidents such as ransomware or hardware failures?
+
+3. Applications and workloads
+- Key applications:
+  - Office suite, email, accounting or ERP, CRM, design tools, and so on.
+- Are these:
+  - Local (server in office)?
+  - Cloud (software as a service)?
+- Any special applications needing low latency to a server?
+
+4. Data and storage
+- Roughly how much shared data do you have (documents, projects, and so on)?
+  - Less than one terabyte, one to five terabytes, more than five terabytes?
+- How fast is it growing?
+- Any regulatory requirements such as GDPR or industry-specific rules?
+
+5. Network and connectivity
+- Current internet connection:
+  - Provider, speed, static IP yes or no.
+- Any branches or warehouses connected via VPN?
+- Do you use VoIP phones and if so, how many?
+
+6. Devices
+- How many:
+  - Desktops?
+  - Laptops?
+  - Phones or tablets used for work?
+  - Barcode scanners or other special devices?
+
+7. Availability and budget
+- How bad is downtime for you:
+  - Annoying but survivable versus losing a lot of money per hour?
+- How long can you be down before it is a real problem?
+  - One to two hours, one day, multiple days?
+- Budget range (even rough) for improvements:
+  - Low, medium, high; define ranges internally, for example low is less than five thousand euros, medium is five to fifteen thousand euros.
+
+8. Security and backup
+- Do you have a backup system today and when was the last successful restore test?
+- Any previous security incidents?
+- Are there any compliance audits you must pass?
+
+9. Future plans
+- More remote work?
+- New locations or moving to a different office?
+- Plans to migrate more services to cloud?
+
+10. Decision process
+- Who is the final decision maker?
+- What is their main concern (price, stability, security, vendor neutrality, and so on)?

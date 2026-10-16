@@ -1,0 +1,60 @@
+TITLE: SMB SERVICE PACKAGE TEMPLATES (INTERNAL – NOT FOR CLIENTS)
+
+Purpose: speed up solution design by having three reference offers.
+
+BRONZE – BASIC STABILITY
+- Target:
+  - Very small offices (ten or fewer users).
+  - Cost-sensitive customers.
+- Components:
+  - Single SMB firewall or router.
+  - Single L2 switch.
+  - One or two access points.
+  - Single NAS with RAID 1 (two disks).
+  - Basic UPS for router, switch, and NAS.
+- Features:
+  - Guest Wi-Fi VLAN.
+  - Central shared folder on NAS.
+  - Basic NAS snapshot backup plus cloud sync of critical folders.
+- Limitations:
+  - No high availability; hardware failure means downtime until repair.
+  - Recovery time and recovery point objectives are not guaranteed below several hours.
+
+SILVER – GROWING SMB
+- Target:
+  - Ten to forty users, more critical data.
+- Components:
+  - Business-grade firewall with VPN and basic security features.
+  - L2 or L3 core switch plus PoE for access points and phones.
+  - Two to three access points with controller functionality.
+  - Either:
+    - One virtualization host plus NAS with better performance, or
+    - Two smaller hosts with shared storage or good backup.
+  - UPS solution sized for at least fifteen to twenty minutes runtime of core gear.
+- Features:
+  - VLANs for staff, guest, management, and VoIP.
+  - Central Active Directory or identity, or strong integration with Microsoft 365 or Google Workspace.
+  - Proper backup with three-two-one rule and cloud component.
+- Limitations:
+  - Some downtime still expected on hardware failures.
+  - Not a full high-availability cluster.
+
+GOLD – HIGHER AVAILABILITY SMB
+- Target:
+  - More than thirty users, or high downtime cost.
+- Components:
+  - Redundant firewall pair if budget allows.
+  - Two or more virtualization hosts.
+  - Shared storage or at least very fast backup or replication between hosts.
+  - Larger UPS with better runtime and graceful shutdown orchestration.
+- Features:
+  - Shorter recovery time objective (aim for less than one hour on most incidents).
+  - More advanced monitoring and alerting.
+  - Stronger security posture (endpoint detection and response, more granular segmentation).
+- Limitations:
+  - Requires bigger budget and more careful maintenance.
+
+Usage
+- Use these packages as starting templates only.
+- Always adjust to real answers from the discovery checklist.
+- Internally, tag designs as Bronze, Silver, or Gold to estimate effort quickly and align expectations.
