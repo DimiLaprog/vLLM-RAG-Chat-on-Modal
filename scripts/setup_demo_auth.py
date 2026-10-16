@@ -9,7 +9,7 @@ One-time setup for the demo's access control.
 5. Redeploys inferencing.py and streamlitserve.py.
 6. Checks that the backend now rejects requests without the token.
 
-Usage (from anywhere, with the Python env that has Modal installed):
+Usage (inside the repo, with the Python env that has Modal installed):
     git switch dev && python scripts/setup_demo_auth.py
 
 Re-run it any time to change the password; it also issues a fresh token.
