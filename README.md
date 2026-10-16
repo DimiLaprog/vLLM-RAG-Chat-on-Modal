@@ -12,6 +12,28 @@ End-to-end Retrieval Augmented Generation (RAG) stack:
 [Watch the demo ▶️](https://www.loom.com/share/270222a0b6fd4a199e5bf46b1fa71b01)
 [![Watch the demo](./vLLM-RAG-MODAL-THUMBNAIL.png)](https://www.loom.com/share/270222a0b6fd4a199e5bf46b1fa71b01)
 
+## Beyond the course
+
+Serving the model with vLLM on Modal and the base Streamlit chat UI follow the course this project started from (see Acknowledgements). Everything below was added on top:
+
+- **RAG inside the vLLM server:** a subclass of vLLM's `OpenAIServingChat` retrieves the top-3 FAISS chunks for every `/v1/chat/completions` request and appends them to the latest user message. Any OpenAI-compatible client gets RAG with no client-side changes.
+- **Ingestion pipeline:** `rag_ingest.py` splits the docs in `docs/` into 800-character chunks (150 overlap), embeds them with `text-embedding-3-small`, and writes a cosine FAISS index plus metadata to a Modal Volume that the GPU server loads at startup.
+- **Personas:** switchable system prompts in the Streamlit sidebar, applied to the conversation in progress.
+- **Access control:** Modal proxy auth on the GPU endpoint and a password-gated UI, so the public deployment can't be used to run up GPU cost.
+
+## Numbers
+
+| Metric | Value |
+|---|---|
+| Model | Llama 3.1 8B Instruct, 4-bit weights (w4a16), vLLM 0.6.3 |
+| GPU | 1× NVIDIA T4 (16 GB) |
+| Cold start | ~1.5 min to first response (measured) |
+| Idle cost | $0: scales to zero after 5 min without requests |
+| GPU cost while running | ~$0.59/hr (Modal T4 rate) |
+| Typical 15-min demo | ~$0.25, including warm-up and idle tail |
+| Scaling | 2 concurrent requests per GPU container; Modal adds containers under load |
+| Retrieval cost | Top-3 chunks per question; query embedding ≈ $0.000001 |
+
 ## High-level architecture
 ```mermaid
 graph TD
