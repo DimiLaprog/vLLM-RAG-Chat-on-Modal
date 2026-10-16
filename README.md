@@ -41,6 +41,19 @@ graph TD
   end
 
 ```
+## Access control
+
+The GPU backend uses Modal [proxy auth](https://modal.com/docs/guide/webhook-proxy-auth), so requests without a token are rejected before they reach it. The Streamlit UI asks for a demo password before it contacts the backend, so a visitor without the password can't wake the GPU.
+
+Both values live in a Modal secret named `demo-auth`. Setup (Modal CLI 1.5.1+):
+
+```bash
+modal workspace proxy-tokens create --name demo-ui   # prints "Authorization: Bearer wk-....ws-..."
+modal secret create demo-auth MODAL_PROXY_TOKEN=wk-....ws-... DEMO_PASSWORD=<your-password>
+modal deploy inferencing.py
+modal deploy streamlitserve.py
+```
+
 ## Acknowledgements
 
 This project was initially inspired by the Udemy course "Production LLM Deployment: vLLM,FastAPI,Modal and AI Chatbot" by Petar Petkanov (Not affiliated or sponsored in any way).

@@ -52,7 +52,7 @@ if not streamlit_script_local_path.exists():
 # `subprocess.Popen`. We also expose port 8000 using the `@web_server` decorator.
 
 
-@app.function()
+@app.function(secrets=[modal.Secret.from_name("demo-auth")])  # MODAL_PROXY_TOKEN + DEMO_PASSWORD
 @modal.concurrent(max_inputs=100)
 @modal.web_server(8000)
 def run():

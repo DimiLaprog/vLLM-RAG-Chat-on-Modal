@@ -1,3 +1,4 @@
+import hmac
 import os
 
 import modal
@@ -20,8 +21,9 @@ def init_client_and_model():
     Create an OpenAI-compatible client pointing to your Modal vLLM deployment
     and fetch the active model ID (first model in /v1/models).
     """
-    # In production, set MODAL_TOKEN in env or Streamlit secrets
-    token = "my-token"
+    # Modal proxy auth token ("wk-....ws-..."), injected from the Modal secret "demo-auth".
+    # The OpenAI client sends it as "Authorization: Bearer <token>", which Modal's proxy accepts.
+    token = os.environ["MODAL_PROXY_TOKEN"]
 
     # You can override these via env vars if needed
     workspace = os.getenv("MODAL_WORKSPACE","dim-lambros")
@@ -61,9 +63,30 @@ def get_completion_stream(client: OpenAI, model_id: str, messages: list):
         return None
 
 
+def require_password():
+    """
+    Ask for DEMO_PASSWORD (from the Modal secret "demo-auth") before anything
+    contacts the GPU backend, so a visitor without it can't wake the GPU.
+    """
+    if st.session_state.get("authenticated"):
+        return
+    expected = os.environ.get("DEMO_PASSWORD", "")
+    if not expected:
+        st.error("DEMO_PASSWORD is not configured.")
+        st.stop()
+    entered = st.text_input("Demo password", type="password")
+    if entered and hmac.compare_digest(entered.encode(), expected.encode()):
+        st.session_state["authenticated"] = True
+        st.rerun()
+    if entered:
+        st.error("Wrong password.")
+    st.stop()
+
+
 def main():
     st.set_page_config(page_title="Modal vLLM Chat", page_icon="💬")
     st.title("Modal vLLM Chat (Streamlit UI)")
+    require_password()
     # choose persona
     persona_name = st.sidebar.selectbox("Personality", list(PERSONAS.keys()))
     system_prompt = PERSONAS[persona_name]

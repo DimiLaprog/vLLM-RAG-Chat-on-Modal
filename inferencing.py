@@ -196,7 +196,7 @@ class RAGLLMConfig:
         return results
 
 
-    @modal.asgi_app()
+    @modal.asgi_app(requires_proxy_auth=True)  # Modal's proxy rejects requests without a proxy auth token
     def serve(self):
         import fastapi
         import vllm.entrypoints.openai.api_server as api_server
